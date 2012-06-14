@@ -12,13 +12,21 @@ class Enigma
   end
 
   def process(message)
-    forward = @forward_translation[message]
-    reflected = reflect(forward)
-    @reverse_translation[reflected]
+    forwarded = forward(message)
+    reflected = reflect(forwarded)
+    reverse(reflected)
   end
 
   def reflect(input)
     index = @reflector.index( input )
     ALPHABET[index]
+  end
+
+  def forward(input)
+    @forward_translation[input]
+  end
+
+  def reverse(input)
+    @reverse_translation[input]
   end
 end
