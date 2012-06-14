@@ -11,19 +11,24 @@ class Enigma
   end
 
   class Rotor
-    def initialize(mapping, decorated = nil)
+    def initialize(mapping, offset, decorated)
       @mapping = mapping
+      @offset = offset
       @decorated = decorated
     end
 
     def forward(input)
-      index = ALPHABET.index( input )
-      @mapping[index]
+      index = ALPHABET.index( input ) + @offset
+      step = @mapping[index]
+      index = ALPHABET.index( step ) - @offset
+      ALPHABET[index]
     end
 
     def reverse(input)
-      index = @mapping.index(input)
-      ALPHABET[index]
+      index = ALPHABET.index(input) + @offset
+      step = ALPHABET[index]
+      index = @mapping.index(step)
+      ALPHABET[index - @offset]
     end
 
     def translate(input)
@@ -39,9 +44,9 @@ class Enigma
 
   def initialize(left_rotor, center_rotor, right_rotor)
     @reflector = Reflector.new "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-    @left_rotor = Rotor.new "EKMFLGDQVZNTOWYHXUSPAIRBCJ", @reflector
-    @center_rotor = Rotor.new "AJDKSIRUXBLHWTMCQGZNPYFVOE", @left_rotor
-    @right_rotor = Rotor.new "BDFHJLCPRTXVZNYEIWGAKMUSQO", @center_rotor
+    @left_rotor = Rotor.new "EKMFLGDQVZNTOWYHXUSPAIRBCJ", 0, @reflector
+    @center_rotor = Rotor.new "AJDKSIRUXBLHWTMCQGZNPYFVOE", 0, @left_rotor
+    @right_rotor = Rotor.new "BDFHJLCPRTXVZNYEIWGAKMUSQO", 0, @center_rotor
   end
 
   def process(message)
