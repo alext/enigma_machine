@@ -1,4 +1,15 @@
 class Enigma
+  class Reflector
+    def initialize(mapping)
+      @mapping = mapping
+    end
+
+    def translate(input)
+      index = @mapping.index( input )
+      ALPHABET[index]
+    end
+  end
+
   ALPHABET = ('A'..'Z').to_a
 
   def initialize(left_rotor, center_rotor, right_rotor)
@@ -10,18 +21,13 @@ class Enigma
     @center_offset = ALPHABET.index(center_rotor[1])
     @right_rotor = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
     @right_offset = ALPHABET.index(right_rotor[1])
-    @reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT"
+    @reflector = Reflector.new "YRUHQSLDPXNGOKMIEBFZCWVJAT"
   end
 
   def process(message)
     forwarded = forward(message)
-    reflected = reflect(forwarded)
+    reflected = @reflector.translate(forwarded)
     reverse(reflected)
-  end
-
-  def reflect(input)
-    index = @reflector.index( input )
-    ALPHABET[index]
   end
 
   def forward(input)
