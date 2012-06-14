@@ -10,17 +10,30 @@ class Enigma
     end
   end
 
+  class Rotor
+    def initialize(mapping)
+      @mapping = mapping
+    end
+
+    def forward(input)
+      index = ALPHABET.index( input )
+      @mapping[index]
+    end
+
+    def reverse(input)
+      index = @mapping.index(input)
+      ALPHABET[index]
+    end
+  end
+
   ALPHABET = ('A'..'Z').to_a
 
   def initialize(left_rotor, center_rotor, right_rotor)
     @translator = { "E" => "Q", "Q" => "E" }
     @reverse_translation  = { "N" => "C", 'W' => 'E' }
-    @left_rotor = "EKMFLGDQVZNTOWYHXUSPAIRBCJ"
-    @left_offset = ALPHABET.index(left_rotor[1])
-    @center_rotor = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-    @center_offset = ALPHABET.index(center_rotor[1])
-    @right_rotor = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-    @right_offset = ALPHABET.index(right_rotor[1])
+    @left_rotor = Rotor.new "EKMFLGDQVZNTOWYHXUSPAIRBCJ"
+    @center_rotor = Rotor.new "AJDKSIRUXBLHWTMCQGZNPYFVOE"
+    @right_rotor = Rotor.new "BDFHJLCPRTXVZNYEIWGAKMUSQO"
     @reflector = Reflector.new "YRUHQSLDPXNGOKMIEBFZCWVJAT"
   end
 
@@ -31,22 +44,18 @@ class Enigma
   end
 
   def forward(input)
-    index = ALPHABET.index( input )
-    step = @right_rotor[index]
-    index = ALPHABET.index( step )
-    step = @center_rotor[index]
-    index = ALPHABET.index( step )
-    step = @left_rotor[index]
+    step = input
+    step = @right_rotor.forward(step)
+    step = @center_rotor.forward(step)
+    step = @left_rotor.forward(step)
     step
   end
 
   def reverse(input)
-    index = @left_rotor.index(input)
-    step = ALPHABET[index]
-    index = @center_rotor.index(step)
-    step = ALPHABET[index]
-    index = @right_rotor.index(step)
-    step = ALPHABET[index]
+    step = input
+    step = @left_rotor.reverse(step)
+    step = @center_rotor.reverse(step)
+    step = @right_rotor.reverse(step)
     step
   end
 end
