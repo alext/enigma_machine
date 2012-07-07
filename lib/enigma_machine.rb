@@ -1,4 +1,4 @@
-class Enigma
+class EnigmaMachine
   class Reflector
     def initialize(mapping)
       @mapping = mapping

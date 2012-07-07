@@ -1,2 +1,2 @@
 $: << '../lib'
-require 'enigma'
+require 'enigma_machine'
