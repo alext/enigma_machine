@@ -1,4 +1,5 @@
 class EnigmaMachine
+  ConfigurationError = Class.new(StandardError)
   class Reflector
     def initialize(mapping)
       @mapping = mapping
@@ -55,3 +56,4 @@ class EnigmaMachine
 end
 
 require 'enigma_machine/version'
+require 'enigma_machine/plugboard'
