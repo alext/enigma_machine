@@ -53,3 +53,5 @@ class EnigmaMachine
     @right_rotor.translate message
   end
 end
+
+require 'enigma_machine/version'
