@@ -11,36 +11,6 @@ class EnigmaMachine
     end
   end
 
-  class Rotor
-    def initialize(mapping, offset, decorated)
-      @mapping = mapping
-      @offset = offset
-      @decorated = decorated
-    end
-
-    def forward(input)
-      index = ALPHABET.index( input ) + @offset
-      step = @mapping[index]
-      index = ALPHABET.index( step ) - @offset
-      ALPHABET[index]
-    end
-
-    def reverse(input)
-      index = ALPHABET.index(input) + @offset
-      step = ALPHABET[index]
-      index = @mapping.index(step)
-      ALPHABET[index - @offset]
-    end
-
-    def translate(input)
-      step = input
-      step = forward(step)
-      step = @decorated.translate(step)
-      step = reverse(step)
-      step
-    end
-  end
-
   ALPHABET = ('A'..'Z').to_a
 
   def initialize(left_rotor, center_rotor, right_rotor)
@@ -57,3 +27,4 @@ end
 
 require 'enigma_machine/version'
 require 'enigma_machine/plugboard'
+require 'enigma_machine/rotor'
