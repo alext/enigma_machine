@@ -26,13 +26,48 @@ describe EnigmaMachine::Rotor do
 
       it "should translate letters correctly in the forward direction" do
         @rotor.forward("B").should == "V"
-        @rotor.forward("Y").should == "E"
+        @rotor.forward("U").should == "B"
       end
 
       it "should translate letters correctly in the reverse direction" do
-        @rotor.reverse("L").should == "T"
+        @rotor.reverse("F").should == "A"
         @rotor.reverse("C").should == "S"
       end
+    end
+
+    context "with a ring-setting of 1 (no adjustment), and a rotor position of L" do
+      before :each do
+        @rotor = EnigmaMachine::Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ_R", 1, :decorated)
+        @rotor.position = 'L'
+      end
+
+      it "should translate letters correctly in the forward direction" do
+        @rotor.forward("B").should == "D"
+        @rotor.forward("Y").should == "O"
+      end
+
+      it "should translate letters correctly in the reverse direction" do
+        @rotor.reverse("L").should == "C"
+        @rotor.reverse("V").should == "U"
+      end
+    end
+
+    context "with a ring-setting of 5, and a rotor position of T" do
+      before :each do
+        @rotor = EnigmaMachine::Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ_R", 5, :decorated)
+        @rotor.position = 'T'
+      end
+
+      it "should translate letters correctly in the forward direction" do
+        @rotor.forward("B").should == "I"
+        @rotor.forward("Y").should == "H"
+      end
+
+      it "should translate letters correctly in the reverse direction" do
+        @rotor.reverse("L").should == "F"
+        @rotor.reverse("V").should == "M"
+      end
+
     end
   end
 
