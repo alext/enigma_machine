@@ -18,6 +18,22 @@ describe EnigmaMachine::Rotor do
         @rotor.reverse("C").should == "Y"
       end
     end
+
+    context "with a ring-setting of 5, and a rotor position of A (the default)" do
+      before :each do
+        @rotor = EnigmaMachine::Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ_R", 5, :decorated)
+      end
+
+      it "should translate letters correctly in the forward direction" do
+        @rotor.forward("B").should == "V"
+        @rotor.forward("Y").should == "E"
+      end
+
+      it "should translate letters correctly in the reverse direction" do
+        @rotor.reverse("L").should == "T"
+        @rotor.reverse("C").should == "S"
+      end
+    end
   end
 
   describe "decorating a reflector" do
