@@ -1,7 +1,8 @@
 class EnigmaMachine
   class Rotor
-    def initialize(mapping, ring_setting, decorated)
-      @mapping = mapping.split('_').first
+    def initialize(rotor_spec, ring_setting, decorated)
+      mapping, step_points = rotor_spec.split('_', 2)
+      @mapping = mapping.each_char.map {|c| ALPHABET.index(c) }
       @ring_offset = ring_setting - 1
       @decorated = decorated
       @position = 'A'
@@ -10,15 +11,15 @@ class EnigmaMachine
     attr_writer :position
 
     def forward(letter)
-      index = (ALPHABET.index(letter) - rotor_offset).modulo(26)
-      new_index = (ALPHABET.index(@mapping[index]) + rotor_offset).modulo(26)
+      index = add_offset ALPHABET.index(letter)
+      new_index = sub_offset @mapping[index]
       ALPHABET[new_index]
     end
 
     def reverse(letter)
-      i = (ALPHABET.index(letter) - rotor_offset).modulo(26)
-      index = (@mapping.index(ALPHABET[i]) + rotor_offset).modulo(26)
-      ALPHABET[index]
+      index = add_offset ALPHABET.index(letter)
+      new_index = sub_offset @mapping.index(index)
+      ALPHABET[new_index]
     end
 
     def translate(input)
@@ -30,7 +31,14 @@ class EnigmaMachine
     private
 
     def rotor_offset
-      @ring_offset - ALPHABET.index(@position)
+      ALPHABET.index(@position) - @ring_offset
+    end
+
+    def add_offset(number)
+      (number + rotor_offset).modulo(26)
+    end
+    def sub_offset(number)
+      (number - rotor_offset).modulo(26)
     end
   end
 end
