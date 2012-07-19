@@ -5,10 +5,12 @@ class EnigmaMachine
       @mapping = mapping.each_char.map {|c| ALPHABET.index(c) }
       @ring_offset = ring_setting - 1
       @decorated = decorated
-      @position = 'A'
+      self.position = 'A'
     end
 
-    attr_writer :position
+    def position=(letter)
+      @position = ALPHABET.index(letter)
+    end
 
     def forward(letter)
       index = add_offset ALPHABET.index(letter)
@@ -31,7 +33,7 @@ class EnigmaMachine
     private
 
     def rotor_offset
-      ALPHABET.index(@position) - @ring_offset
+      @position - @ring_offset
     end
 
     def add_offset(number)
