@@ -11,6 +11,13 @@ class EnigmaMachine
     def position=(letter)
       @position = ALPHABET.index(letter)
     end
+    def position
+      ALPHABET[@position]
+    end
+
+    def advance_position
+      @position = (@position + 1).modulo(26)
+    end
 
     def forward(letter)
       index = add_offset ALPHABET.index(letter)

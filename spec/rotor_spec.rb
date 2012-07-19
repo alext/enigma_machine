@@ -2,6 +2,34 @@ require 'spec_helper'
 
 describe EnigmaMachine::Rotor do
 
+  describe "setting and manipulating rotor positions" do
+    before :each do
+      @rotor = EnigmaMachine::Rotor.new("ABCD", 1, :foo)
+    end
+
+    it "should set the position to 'A' by default" do
+      @rotor.position.should == 'A'
+    end
+
+    it "should allow setting the position" do
+      @rotor.position = 'G'
+      @rotor.position.should == 'G'
+    end
+
+    describe "advancing the position" do
+      it "should allow advancing the position" do
+        @rotor.advance_position
+        @rotor.position.should == 'B'
+      end
+
+      it "should wrap around when advancing beyond 'Z'" do
+        @rotor.position = 'Z'
+        @rotor.advance_position
+        @rotor.position.should == 'A'
+      end
+    end
+  end
+
   describe "forward and reverse translation" do
     context "with a ring-setting of 1 (no adjustment), and a rotor position of A (the default)" do
       before :each do
