@@ -3,11 +3,13 @@ class EnigmaMachine
 
   ALPHABET = ('A'..'Z').to_a
 
-  def initialize(left_rotor, center_rotor, right_rotor)
-    @reflector = Reflector.new "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-    @left_rotor = Rotor.new "EKMFLGDQVZNTOWYHXUSPAIRBCJ", 0, @reflector
-    @center_rotor = Rotor.new "AJDKSIRUXBLHWTMCQGZNPYFVOE", 0, @left_rotor
-    @right_rotor = Rotor.new "BDFHJLCPRTXVZNYEIWGAKMUSQO", 0, @center_rotor
+  def initialize(config)
+    @reflector = Reflector.new config[:reflector]
+    @rotors = []
+    config[:rotors].inject(@reflector) do |previous, rotor_config|
+      Rotor.new(*rotor_config, previous).tap {|r| @rotors << r }
+    end
+    @plugboard = Plugboard.new(config[:plug_pairs], @rotors.last)
   end
 
   def process(message)
