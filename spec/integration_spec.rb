@@ -41,8 +41,8 @@ describe "Integration tests" do
       # Examples taken from http://wiki.franklinheath.co.uk/index.php/Enigma/Sample_Messages
       specify "Enigma Instruction Manual 1930" do
         e = EnigmaMachine.new(
-          :reflector => 'A',
-          :rotors => [['II', 24], ['I', 13], ['III', 22]],
+          :reflector => :A,
+          :rotors => [[:ii, 24], [:i, 13], [:iii, 22]],
           :plug_pairs => %w(AM FI NV PS TU WZ)
         )
 
@@ -56,8 +56,8 @@ describe "Integration tests" do
 
       specify "Operation Barbarossa, 1941" do
         e = EnigmaMachine.new(
-          :reflector => 'B',
-          :rotors => [['II', 2], ['IV', 21], ['V', 12]],
+          :reflector => :B,
+          :rotors => [[:ii, 2], [:iv, 21], [:v, 12]],
           :plug_pairs => %w(AV BS CG DL FU HZ IN KM OW RX)
         )
 
@@ -75,8 +75,8 @@ describe "Integration tests" do
 
       specify "Scharnhorst (Konteradmiral Erich Bey), 1943" do
         e = EnigmaMachine.new(
-          :reflector => 'B',
-          :rotors => [['III', 1], ['VI', 8], ['VIII', 13]],
+          :reflector => :B,
+          :rotors => [[:iii, 1], [:vi, 8], [:viii, 13]],
           :plug_pairs => %w(AN EZ HK IJ LR MQ OT PV SW UX)
         )
 
