@@ -24,6 +24,49 @@ describe EnigmaMachine::Reflector do
         EnigmaMachine::Reflector.new(%w(AY BR CU DH EQ FS GL IP JX KN MO TZ))
       end.should raise_error(EnigmaMachine::ConfigurationError)
     end
+
+    describe "using one of the standard configurations" do
+      it "should raise an error if using an unknown name" do
+        lambda do
+          EnigmaMachine::Reflector.new(:foo)
+        end.should raise_error(EnigmaMachine::ConfigurationError)
+      end
+
+      it "should support reflector A" do
+        r = EnigmaMachine::Reflector.new(:A)
+        r.translate('A').should == 'E'
+        r.translate('F').should == 'L'
+        r.translate('Q').should == 'O'
+      end
+
+      it "should support reflector B" do
+        r = EnigmaMachine::Reflector.new(:B)
+        r.translate('A').should == 'Y'
+        r.translate('F').should == 'S'
+        r.translate('Q').should == 'E'
+      end
+
+      it "should support reflector C" do
+        r = EnigmaMachine::Reflector.new(:C)
+        r.translate('A').should == 'F'
+        r.translate('K').should == 'R'
+        r.translate('Q').should == 'T'
+      end
+
+      it "should support reflector Bthin" do
+        r = EnigmaMachine::Reflector.new(:Bthin)
+        r.translate('A').should == 'E'
+        r.translate('F').should == 'U'
+        r.translate('P').should == 'M'
+      end
+
+      it "should support reflector Cthin" do
+        r = EnigmaMachine::Reflector.new(:Cthin)
+        r.translate('A').should == 'R'
+        r.translate('K').should == 'H'
+        r.translate('Q').should == 'Z'
+      end
+    end
   end
 
   describe "translating letters" do
