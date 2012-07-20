@@ -1,15 +1,5 @@
 class EnigmaMachine
   ConfigurationError = Class.new(StandardError)
-  class Reflector
-    def initialize(mapping)
-      @mapping = mapping
-    end
-
-    def translate(input)
-      index = @mapping.index( input )
-      ALPHABET[index]
-    end
-  end
 
   ALPHABET = ('A'..'Z').to_a
 
@@ -28,3 +18,4 @@ end
 require 'enigma_machine/version'
 require 'enigma_machine/plugboard'
 require 'enigma_machine/rotor'
+require 'enigma_machine/reflector'
