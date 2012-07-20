@@ -1,6 +1,23 @@
 class EnigmaMachine
   class Rotor
+    STANDARD_ROTORS = {
+      :i      => "EKMFLGDQVZNTOWYHXUSPAIBRCJ_A",
+      :ii     => "AJDKSIRUXBLHWTMCQGZNPYFVOE_A",
+      :iii    => "BDFHJLCPRTXVZNYEIWGAKMUSQO_A",
+      :iv     => "ESOVPZJAYQUIRHXLNFTGKDCMWB_A",
+      :v      => "VZBRGITYUPSDNHLXAWMJQOFECK_A",
+      :vi     => "JPGVOUMFYQBENHZRDKASXLICTW_A",
+      :vii    => "NZJHGRCXMYSWBOUFAIVLPEKQDT_A",
+      :viii   => "FKQHTLXOCBJSPDZRAMEWNIUYGV_A",
+      :beta   => "LEYJVCNIXWPBQMDRTAKZGFUHOS_A",
+      :gamma  => "FSOKANUERHMBTIYCWLQPZXVGJD_A",
+    }
+
     def initialize(rotor_spec, ring_setting, decorated)
+      if rotor_spec.is_a?(Symbol)
+        raise ConfigurationError unless STANDARD_ROTORS.has_key?(rotor_spec)
+        rotor_spec = STANDARD_ROTORS[rotor_spec]
+      end
       mapping, step_points = rotor_spec.split('_', 2)
       @mapping = mapping.each_char.map {|c| ALPHABET.index(c) }
       @ring_offset = ring_setting - 1

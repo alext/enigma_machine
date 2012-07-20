@@ -2,6 +2,75 @@ require 'spec_helper'
 
 describe EnigmaMachine::Rotor do
 
+  describe "configuring a rotor" do
+    describe "using one of the standard configurations" do
+      it "should raise an error if using an unknown name" do
+        lambda do
+          EnigmaMachine::Rotor.new(:foo, 1, :next)
+        end.should raise_error(EnigmaMachine::ConfigurationError)
+      end
+
+      it "should support rotor i" do
+        r = EnigmaMachine::Rotor.new(:i, 1, :next)
+        r.forward('A').should == 'E'
+        r.forward('Q').should == 'X'
+      end
+
+      it "should support rotor ii" do
+        r = EnigmaMachine::Rotor.new(:ii, 1, :next)
+        r.forward('A').should == 'A'
+        r.forward('M').should == 'W'
+      end
+
+      it "should support rotor iii" do
+        r = EnigmaMachine::Rotor.new(:iii, 1, :next)
+        r.forward('A').should == 'B'
+        r.forward('Q').should == 'I'
+      end
+
+      it "should support rotor iv" do
+        r = EnigmaMachine::Rotor.new(:iv, 1, :next)
+        r.forward('A').should == 'E'
+        r.forward('Q').should == 'N'
+      end
+
+      it "should support rotor v" do
+        r = EnigmaMachine::Rotor.new(:v, 1, :next)
+        r.forward('A').should == 'V'
+        r.forward('Q').should == 'A'
+      end
+
+      it "should support rotor vi" do
+        r = EnigmaMachine::Rotor.new(:vi, 1, :next)
+        r.forward('A').should == 'J'
+        r.forward('Q').should == 'D'
+      end
+
+      it "should support rotor vii" do
+        r = EnigmaMachine::Rotor.new(:vii, 1, :next)
+        r.forward('A').should == 'N'
+        r.forward('Q').should == 'A'
+      end
+
+      it "should support rotor viii" do
+        r = EnigmaMachine::Rotor.new(:viii, 1, :next)
+        r.forward('A').should == 'F'
+        r.forward('Q').should == 'A'
+      end
+
+      it "should support rotor beta" do
+        r = EnigmaMachine::Rotor.new(:beta, 1, :next)
+        r.forward('A').should == 'L'
+        r.forward('Q').should == 'T'
+      end
+
+      it "should support rotor gamma" do
+        r = EnigmaMachine::Rotor.new(:gamma, 1, :next)
+        r.forward('A').should == 'F'
+        r.forward('Q').should == 'W'
+      end
+    end
+  end
   describe "setting and manipulating rotor positions" do
     before :each do
       @rotor = EnigmaMachine::Rotor.new("ABCD", 1, :foo)
