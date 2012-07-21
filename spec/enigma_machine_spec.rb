@@ -19,7 +19,42 @@ describe EnigmaMachine do
   end
 
   describe "processing a message" do
+    before :each do
+      EnigmaMachine::Reflector.stub!(:new)
+      EnigmaMachine::Rotor.stub!(:new)
+      EnigmaMachine::Plugboard.stub!(:new)
 
+      @e = EnigmaMachine.new(:rotors => [:a, :b, :c])
+      @e.stub!(:press_key).and_return('Z')
+    end
+
+    it "should call press_key for each letter in order, and return the results" do
+      @e.should_receive(:press_key).with('A').ordered.and_return('B')
+      @e.should_receive(:press_key).with('B').ordered.and_return('C')
+      @e.should_receive(:press_key).with('C').ordered.and_return('D')
+
+      @e.process('ABC').should == 'BCD'
+    end
+
+    it "should pass through spaces unmodified" do
+      @e.should_not_receive(:press_key).with(' ')
+
+      @e.process('ABC DEF').should == 'ZZZ ZZZ'
+    end
+
+    it "should upcase the input before passing to press_key" do
+      @e.should_receive(:press_key).with('A').ordered.and_return('B')
+      @e.should_receive(:press_key).with('B').ordered.and_return('C')
+      @e.should_receive(:press_key).with('C').ordered.and_return('D')
+
+      @e.process('aBc').should == 'BCD'
+    end
+
+    it "should discard any other characters passed in" do
+      @e.should_not_receive(:press_key).with(/[^A-Z]/)
+
+      @e.process('A1B3C.D+E%F123').should == 'ZZZZZZ'
+    end
   end
 
   describe "processing a letter" do

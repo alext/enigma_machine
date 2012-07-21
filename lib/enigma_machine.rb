@@ -18,7 +18,14 @@ class EnigmaMachine
   end
 
   def process(message)
-    @right_rotor.translate message
+    message.upcase.each_char.map do |letter|
+      case letter
+      when /[A-Z]/
+        press_key(letter)
+      when ' '
+        ' '
+      end
+    end.join
   end
 
   private
