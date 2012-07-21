@@ -14,48 +14,70 @@ describe EnigmaMachine::Rotor do
         r = EnigmaMachine::Rotor.new(:i, 1, :next)
         r.forward('A').should == 'E'
         r.forward('Q').should == 'X'
+        r.position = 'Q'
+        r.at_notch?.should == true
       end
 
       it "should support rotor ii" do
         r = EnigmaMachine::Rotor.new(:ii, 1, :next)
         r.forward('A').should == 'A'
         r.forward('M').should == 'W'
+        r.position = 'E'
+        r.at_notch?.should == true
       end
 
       it "should support rotor iii" do
         r = EnigmaMachine::Rotor.new(:iii, 1, :next)
         r.forward('A').should == 'B'
         r.forward('Q').should == 'I'
+        r.position = 'V'
+        r.at_notch?.should == true
       end
 
       it "should support rotor iv" do
         r = EnigmaMachine::Rotor.new(:iv, 1, :next)
         r.forward('A').should == 'E'
         r.forward('Q').should == 'N'
+        r.position = 'J'
+        r.at_notch?.should == true
       end
 
       it "should support rotor v" do
         r = EnigmaMachine::Rotor.new(:v, 1, :next)
         r.forward('A').should == 'V'
         r.forward('Q').should == 'A'
+        r.position = 'Z'
+        r.at_notch?.should == true
       end
 
       it "should support rotor vi" do
         r = EnigmaMachine::Rotor.new(:vi, 1, :next)
         r.forward('A').should == 'J'
         r.forward('Q').should == 'D'
+        r.position = 'M'
+        r.at_notch?.should == true
+        r.position = 'Z'
+        r.at_notch?.should == true
       end
 
       it "should support rotor vii" do
         r = EnigmaMachine::Rotor.new(:vii, 1, :next)
         r.forward('A').should == 'N'
         r.forward('Q').should == 'A'
+        r.position = 'M'
+        r.at_notch?.should == true
+        r.position = 'Z'
+        r.at_notch?.should == true
       end
 
       it "should support rotor viii" do
         r = EnigmaMachine::Rotor.new(:viii, 1, :next)
         r.forward('A').should == 'F'
         r.forward('Q').should == 'A'
+        r.position = 'M'
+        r.at_notch?.should == true
+        r.position = 'Z'
+        r.at_notch?.should == true
       end
 
       it "should support rotor beta" do

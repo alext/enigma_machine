@@ -1,16 +1,16 @@
 class EnigmaMachine
   class Rotor
     STANDARD_ROTORS = {
-      :i      => "EKMFLGDQVZNTOWYHXUSPAIBRCJ_A",
-      :ii     => "AJDKSIRUXBLHWTMCQGZNPYFVOE_A",
-      :iii    => "BDFHJLCPRTXVZNYEIWGAKMUSQO_A",
-      :iv     => "ESOVPZJAYQUIRHXLNFTGKDCMWB_A",
-      :v      => "VZBRGITYUPSDNHLXAWMJQOFECK_A",
-      :vi     => "JPGVOUMFYQBENHZRDKASXLICTW_A",
-      :vii    => "NZJHGRCXMYSWBOUFAIVLPEKQDT_A",
-      :viii   => "FKQHTLXOCBJSPDZRAMEWNIUYGV_A",
-      :beta   => "LEYJVCNIXWPBQMDRTAKZGFUHOS_A",
-      :gamma  => "FSOKANUERHMBTIYCWLQPZXVGJD_A",
+      :i      => "EKMFLGDQVZNTOWYHXUSPAIBRCJ_Q",
+      :ii     => "AJDKSIRUXBLHWTMCQGZNPYFVOE_E",
+      :iii    => "BDFHJLCPRTXVZNYEIWGAKMUSQO_V",
+      :iv     => "ESOVPZJAYQUIRHXLNFTGKDCMWB_J",
+      :v      => "VZBRGITYUPSDNHLXAWMJQOFECK_Z",
+      :vi     => "JPGVOUMFYQBENHZRDKASXLICTW_MZ",
+      :vii    => "NZJHGRCXMYSWBOUFAIVLPEKQDT_MZ",
+      :viii   => "FKQHTLXOCBJSPDZRAMEWNIUYGV_MZ",
+      :beta   => "LEYJVCNIXWPBQMDRTAKZGFUHOS_", # The beta and gamma rotors caould only go 
+      :gamma  => "FSOKANUERHMBTIYCWLQPZXVGJD_", # in position 4, and hence have no notches.
     }
 
     def initialize(rotor_spec, ring_setting, decorated)
