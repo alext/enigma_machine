@@ -45,6 +45,17 @@ describe "Integration tests" do
 
       e.translate('QKTPE BZIUK').should == 'GOODR ESULT'
     end
+
+    it "should translate a message with a plugboard as well" do
+      e = EnigmaMachine.new(
+        :reflector => :B,
+        :rotors => [[:i, 10], [:ii, 14], [:iii, 21]],
+        :plug_pairs => %w(AP BR CM FZ GJ IL NT OV QS WX)
+      )
+      e.set_rotors('V', 'Q', 'Q')
+
+      e.translate('HABHV HLYDF NADZY').should == 'THATS ITWEL LDONE'
+    end
   end
 
   describe "real world sample messages" do
