@@ -109,6 +109,36 @@ describe EnigmaMachine do
   end
 
   describe "advancing rotors" do
+    before :each do
+      @left_rotor = mock("Rotor", :try_advance => false)
+      @middle_rotor = mock("Rotor", :try_advance => false)
+      @right_rotor = mock("Rotor", :try_advance => false)
+      EnigmaMachine::Rotor.stub!(:new).with(:i, anything(), anything()).and_return(@left_rotor)
+      EnigmaMachine::Rotor.stub!(:new).with(:ii, anything(), anything()).and_return(@middle_rotor)
+      EnigmaMachine::Rotor.stub!(:new).with(:iii, anything(), anything()).and_return(@right_rotor)
+      EnigmaMachine::Reflector.stub!(:new)
+      EnigmaMachine::Plugboard.stub!(:new)
 
+      @e = EnigmaMachine.new(:rotors => [[:i,1], [:ii,2], [:iii,3]])
+    end
+
+    it "should advance the right rotor passing in true (there is no previous rotor)" do
+      @right_rotor.should_receive(:try_advance).with(true)
+      @e.send(:advance_rotors)
+    end
+
+    it "should advance the middle rotor passing in the result of advancing the right rotor" do
+      @right_rotor.stub!(:try_advance).and_return(:right_rotor_was_at_notch)
+      @middle_rotor.should_receive(:try_advance).with(:right_rotor_was_at_notch)
+
+      @e.send(:advance_rotors)
+    end
+
+    it "should advance the left rotor passing in the result of advancing the moddle rotor" do
+      @middle_rotor.stub!(:try_advance).and_return(:middle_rotor_was_at_notch)
+      @left_rotor.should_receive(:try_advance).with(:middle_rotor_was_at_notch)
+
+      @e.send(:advance_rotors)
+    end
   end
 end
