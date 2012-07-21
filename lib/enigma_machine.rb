@@ -12,8 +12,18 @@ class EnigmaMachine
     @plugboard = Plugboard.new(config[:plug_pairs], @rotors.last)
   end
 
+  def press_key(letter)
+    advance_rotors
+    @plugboard.translate(letter)
+  end
+
   def process(message)
     @right_rotor.translate message
+  end
+
+  private
+
+  def advance_rotors
   end
 end
 

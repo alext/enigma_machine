@@ -23,7 +23,27 @@ describe EnigmaMachine do
   end
 
   describe "processing a letter" do
+    before :each do
+      EnigmaMachine::Reflector.stub!(:new)
+      EnigmaMachine::Rotor.stub!(:new)
+      @plugboard = mock("Plugboard", :translate => 'B')
+      EnigmaMachine::Plugboard.stub!(:new).and_return(@plugboard)
 
+      @e = EnigmaMachine.new(:rotors => [:a, :b, :c])
+      @e.stub!(:advance_rotors)
+    end
+
+    it "should advance the rotors" do
+      @e.should_receive(:advance_rotors)
+
+      @e.press_key('A')
+    end
+
+    it "should call translate on the plugboard, and return the result" do
+      @plugboard.should_receive(:translate).and_return('F')
+
+      @e.press_key('A').should == 'F'
+    end
   end
 
   describe "advancing rotors" do
