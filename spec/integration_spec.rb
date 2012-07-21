@@ -2,6 +2,21 @@ require 'spec_helper'
 
 describe "Integration tests" do
 
+  describe "basic sample tests" do
+    # taken from http://wiki.franklinheath.co.uk/index.php/Enigma/Paper_Enigma
+
+    it "should translate a message that only needs the right rotor to advance" do
+      e = EnigmaMachine.new(
+        :reflector => :B,
+        :rotors => [[:i, 1], [:ii, 1], [:iii, 1]]
+      )
+      e.set_rotors('A', 'B', 'C')
+
+      e.translate('AEFAE JXXBN XYJTY').should == 'CONGR ATULA TIONS'
+    end
+
+  end
+
   describe "real world sample messages" do
     describe "Enigma I/M3" do
       # Examples taken from http://wiki.franklinheath.co.uk/index.php/Enigma/Sample_Messages

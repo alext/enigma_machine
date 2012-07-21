@@ -37,6 +37,8 @@ class EnigmaMachine
   private
 
   def advance_rotors
+    # Temporarily only advance right rotor
+    @rotors[-1].advance_position
   end
 end
 
