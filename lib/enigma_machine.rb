@@ -9,7 +9,7 @@ class EnigmaMachine
     config[:rotors].inject(@reflector) do |previous, rotor_config|
       Rotor.new(*rotor_config, previous).tap {|r| @rotors << r }
     end
-    @plugboard = Plugboard.new(config[:plug_pairs], @rotors.last)
+    @plugboard = Plugboard.new(config[:plug_pairs] || [], @rotors.last)
   end
 
   def set_rotors(*positions)

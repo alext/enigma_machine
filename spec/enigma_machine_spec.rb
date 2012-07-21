@@ -12,6 +12,14 @@ describe EnigmaMachine do
 
       EnigmaMachine.new(:reflector => :foo, :rotors => [[:i, 1], [:ii, 2], [:iii, 3]], :plug_pairs => [1,2,3])
     end
+
+    it "should create a null plugboard if none specified" do
+      EnigmaMachine::Reflector.stub!(:new)
+      EnigmaMachine::Rotor.stub!(:new)
+      EnigmaMachine::Plugboard.should_receive(:new).with([], anything())
+
+      EnigmaMachine.new(:reflector => :foo, :rotors => [[:i, 1], [:ii, 2], [:iii, 3]])
+    end
   end
 
   describe "setting rotor positions" do
