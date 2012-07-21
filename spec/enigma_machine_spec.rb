@@ -63,10 +63,11 @@ describe EnigmaMachine do
       @e.translate('ABC').should == 'BCD'
     end
 
-    it "should pass through spaces unmodified" do
+    it "should pass through spaces and dashes unmodified" do
       @e.should_not_receive(:press_key).with(' ')
+      @e.should_not_receive(:press_key).with('-')
 
-      @e.translate('ABC DEF').should == 'ZZZ ZZZ'
+      @e.translate('ABCDE F----').should == 'ZZZZZ Z----'
     end
 
     it "should upcase the input before passing to press_key" do

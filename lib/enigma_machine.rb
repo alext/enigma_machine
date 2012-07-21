@@ -28,8 +28,8 @@ class EnigmaMachine
       case letter
       when /[A-Z]/
         press_key(letter)
-      when ' '
-        ' '
+      when /[ -]/
+        letter
       end
     end.join
   end
