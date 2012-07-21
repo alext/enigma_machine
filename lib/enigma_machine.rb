@@ -12,6 +12,12 @@ class EnigmaMachine
     @plugboard = Plugboard.new(config[:plug_pairs], @rotors.last)
   end
 
+  def set_rotors(*positions)
+    positions.each_with_index do |position, i|
+      @rotors[i].position = position
+    end
+  end
+
   def press_key(letter)
     advance_rotors
     @plugboard.translate(letter)

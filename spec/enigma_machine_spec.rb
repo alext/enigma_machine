@@ -15,7 +15,26 @@ describe EnigmaMachine do
   end
 
   describe "setting rotor positions" do
+    before :each do
+      @left_rotor = mock("Rotor")
+      @middle_rotor = mock("Rotor")
+      @right_rotor = mock("Rotor")
+      EnigmaMachine::Rotor.stub!(:new).with(:i, anything(), anything()).and_return(@left_rotor)
+      EnigmaMachine::Rotor.stub!(:new).with(:ii, anything(), anything()).and_return(@middle_rotor)
+      EnigmaMachine::Rotor.stub!(:new).with(:iii, anything(), anything()).and_return(@right_rotor)
+      EnigmaMachine::Reflector.stub!(:new)
+      EnigmaMachine::Plugboard.stub!(:new)
 
+      @e = EnigmaMachine.new(:rotors => [[:i,1], [:ii,2], [:iii,3]])
+    end
+
+    it "should set the position of each rotor" do
+      @left_rotor.should_receive(:position=).with('A')
+      @middle_rotor.should_receive(:position=).with('B')
+      @right_rotor.should_receive(:position=).with('C')
+
+      @e.set_rotors('A', 'B', 'C')
+    end
   end
 
   describe "processing a message" do
