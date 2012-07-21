@@ -23,7 +23,7 @@ class EnigmaMachine
     @plugboard.translate(letter)
   end
 
-  def process(message)
+  def translate(message)
     message.upcase.each_char.map do |letter|
       case letter
       when /[A-Z]/

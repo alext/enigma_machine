@@ -52,13 +52,13 @@ describe EnigmaMachine do
       @e.should_receive(:press_key).with('B').ordered.and_return('C')
       @e.should_receive(:press_key).with('C').ordered.and_return('D')
 
-      @e.process('ABC').should == 'BCD'
+      @e.translate('ABC').should == 'BCD'
     end
 
     it "should pass through spaces unmodified" do
       @e.should_not_receive(:press_key).with(' ')
 
-      @e.process('ABC DEF').should == 'ZZZ ZZZ'
+      @e.translate('ABC DEF').should == 'ZZZ ZZZ'
     end
 
     it "should upcase the input before passing to press_key" do
@@ -66,13 +66,13 @@ describe EnigmaMachine do
       @e.should_receive(:press_key).with('B').ordered.and_return('C')
       @e.should_receive(:press_key).with('C').ordered.and_return('D')
 
-      @e.process('aBc').should == 'BCD'
+      @e.translate('aBc').should == 'BCD'
     end
 
     it "should discard any other characters passed in" do
       @e.should_not_receive(:press_key).with(/[^A-Z]/)
 
-      @e.process('A1B3C.D+E%F123').should == 'ZZZZZZ'
+      @e.translate('A1B3C.D+E%F123').should == 'ZZZZZZ'
     end
   end
 
