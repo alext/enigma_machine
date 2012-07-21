@@ -15,6 +15,35 @@ describe "Integration tests" do
       e.translate('AEFAE JXXBN XYJTY').should == 'CONGR ATULA TIONS'
     end
 
+    it "should translate a message with rotor turnover" do
+      e = EnigmaMachine.new(
+        :reflector => :B,
+        :rotors => [[:i, 1], [:ii, 1], [:iii, 1]]
+      )
+      e.set_rotors('A', 'B', 'R')
+
+      e.translate('MABEK GZXSG').should == 'TURNM IDDLE'
+    end
+
+    it "should translate a message with double stepping" do
+      e = EnigmaMachine.new(
+        :reflector => :B,
+        :rotors => [[:i, 1], [:ii, 1], [:iii, 1]]
+      )
+      e.set_rotors('A', 'D', 'S')
+
+      e.translate('RZFOG FYHPL').should == 'TURNS THREE'
+    end
+
+    it "should translate a message with ring settings" do
+      e = EnigmaMachine.new(
+        :reflector => :B,
+        :rotors => [[:i, 10], [:ii, 14], [:iii, 21]]
+      )
+      e.set_rotors('X', 'Y', 'Z')
+
+      e.translate('QKTPE BZIUK').should == 'GOODR ESULT'
+    end
   end
 
   describe "real world sample messages" do
