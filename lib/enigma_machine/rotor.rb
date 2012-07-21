@@ -18,8 +18,9 @@ class EnigmaMachine
         raise ConfigurationError unless STANDARD_ROTORS.has_key?(rotor_spec)
         rotor_spec = STANDARD_ROTORS[rotor_spec]
       end
-      mapping, step_points = rotor_spec.split('_', 2)
+      mapping, notch_positions = rotor_spec.split('_', 2)
       @mapping = mapping.each_char.map {|c| ALPHABET.index(c) }
+      @notch_positions = notch_positions.split('')
       @ring_offset = ring_setting - 1
       @decorated = decorated
       self.position = 'A'
@@ -34,6 +35,10 @@ class EnigmaMachine
 
     def advance_position
       @position = (@position + 1).modulo(26)
+    end
+
+    def at_notch?
+      @notch_positions.include?(self.position)
     end
 
     def forward(letter)

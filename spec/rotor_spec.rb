@@ -71,9 +71,10 @@ describe EnigmaMachine::Rotor do
       end
     end
   end
+
   describe "setting and manipulating rotor positions" do
     before :each do
-      @rotor = EnigmaMachine::Rotor.new("ABCD", 1, :foo)
+      @rotor = EnigmaMachine::Rotor.new(:i, 1, :foo)
     end
 
     it "should set the position to 'A' by default" do
@@ -96,6 +97,53 @@ describe EnigmaMachine::Rotor do
         @rotor.advance_position
         @rotor.position.should == 'A'
       end
+    end
+  end
+
+  describe "checking notch position" do
+    it "should return true if the rotor is at one of the notch positions" do
+      rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 1, :foo)
+
+      rotor.position = 'D'
+      rotor.at_notch?.should == true
+
+      rotor.position = 'R'
+      rotor.at_notch?.should == true
+    end
+
+    it "should return false otherwise" do
+      rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 1, :foo)
+
+      rotor.position = 'C'
+      rotor.at_notch?.should == false
+      rotor.position = 'E'
+      rotor.at_notch?.should == false
+
+      rotor.position = 'Q'
+      rotor.at_notch?.should == false
+      rotor.position = 'S'
+      rotor.at_notch?.should == false
+
+      rotor.position = 'A'
+      rotor.at_notch?.should == false
+    end
+
+    it "should be unaffected by the ring position" do
+      rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 6, :foo)
+
+      rotor.position = 'C'
+      rotor.at_notch?.should == false
+      rotor.position = 'D'
+      rotor.at_notch?.should == true
+      rotor.position = 'E'
+      rotor.at_notch?.should == false
+
+      rotor.position = 'Q'
+      rotor.at_notch?.should == false
+      rotor.position = 'R'
+      rotor.at_notch?.should == true
+      rotor.position = 'S'
+      rotor.at_notch?.should == false
     end
   end
 
