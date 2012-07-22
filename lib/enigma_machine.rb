@@ -1,8 +1,6 @@
 class EnigmaMachine
   ConfigurationError = Class.new(StandardError)
 
-  ALPHABET = ('A'..'Z').to_a
-
   def initialize(config)
     @reflector = Reflector.new config[:reflector]
     @rotors = []
