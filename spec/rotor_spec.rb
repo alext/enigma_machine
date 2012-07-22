@@ -169,40 +169,6 @@ describe EnigmaMachine::Rotor do
     end
   end
 
-  describe "advancing position based on notch positions" do
-    before :each do
-      @rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_G', 1, :foo)
-      @rotor.position = 'D'
-    end
-
-    it "should advance the position if the previous rotor was at a notch position" do
-      @rotor.try_advance(true)
-      @rotor.position.should == 'E'
-    end
-
-    it "should advance the position if it was at a notch position" do
-      @rotor.position = 'G'
-      @rotor.try_advance(false)
-      @rotor.position.should == 'H'
-    end
-
-    it "should not advance the position otherwise" do
-      @rotor.try_advance(false)
-      @rotor.position.should == 'D'
-    end
-
-    describe "return values" do
-      it "should return true if it was at the notch position before rotating" do
-        @rotor.position = 'G'
-        @rotor.try_advance(true).should == true
-      end
-
-      it "should return false otherwise" do
-        @rotor.try_advance(true).should == false
-      end
-    end
-  end
-
   describe "forward and reverse translation" do
     context "with a ring-setting of 1 (no adjustment), and a rotor position of A (the default)" do
       before :each do

@@ -41,12 +41,6 @@ class EnigmaMachine
       @notch_positions.include?(self.position)
     end
 
-    def try_advance(previous_at_notch)
-      self_at_notch = self.at_notch?
-      advance_position if previous_at_notch or self_at_notch
-      self_at_notch
-    end
-
     def forward(letter)
       index = add_offset ALPHABET.index(letter)
       new_index = sub_offset @mapping[index]
