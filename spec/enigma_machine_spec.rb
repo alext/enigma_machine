@@ -111,9 +111,9 @@ describe EnigmaMachine do
 
   describe "advancing rotors" do
     before :each do
-      @left_rotor = mock("Rotor", :try_advance => false)
-      @middle_rotor = mock("Rotor", :try_advance => false)
-      @right_rotor = mock("Rotor", :try_advance => false)
+      @left_rotor = mock("Rotor", :at_notch? => false, :advance_position => nil)
+      @middle_rotor = mock("Rotor", :at_notch? => false, :advance_position => nil)
+      @right_rotor = mock("Rotor", :at_notch? => false, :advance_position => nil)
       EnigmaMachine::Rotor.stub!(:new).with(:i, anything(), anything()).and_return(@left_rotor)
       EnigmaMachine::Rotor.stub!(:new).with(:ii, anything(), anything()).and_return(@middle_rotor)
       EnigmaMachine::Rotor.stub!(:new).with(:iii, anything(), anything()).and_return(@right_rotor)
@@ -123,23 +123,70 @@ describe EnigmaMachine do
       @e = EnigmaMachine.new(:rotors => [[:i,1], [:ii,2], [:iii,3]])
     end
 
-    it "should advance the right rotor passing in true (there is no previous rotor)" do
-      @right_rotor.should_receive(:try_advance).with(true)
-      @e.send(:advance_rotors)
+    describe "right rotor" do
+      it "should be advanced every time" do
+        @right_rotor.should_receive(:advance_position)
+        @e.send(:advance_rotors)
+      end
     end
 
-    it "should advance the middle rotor passing in the result of advancing the right rotor" do
-      @right_rotor.stub!(:try_advance).and_return(:right_rotor_was_at_notch)
-      @middle_rotor.should_receive(:try_advance).with(:right_rotor_was_at_notch)
+    describe "middle rotor" do
+      it "should be advanced if the right rotor is at a notch" do
+        @right_rotor.stub!(:at_notch?).and_return(true)
+        @middle_rotor.should_receive(:advance_position)
 
-      @e.send(:advance_rotors)
+        @e.send(:advance_rotors)
+      end
+
+      it "should be advanced if it is at a notch" do
+        @middle_rotor.stub!(:at_notch?).and_return(true)
+        @middle_rotor.should_receive(:advance_position)
+
+        @e.send(:advance_rotors)
+      end
+
+      it "should not be advanced otherwise" do
+        @middle_rotor.should_not_receive(:advance_position)
+
+        @e.send(:advance_rotors)
+      end
     end
 
-    it "should advance the left rotor passing in the result of advancing the moddle rotor" do
-      @middle_rotor.stub!(:try_advance).and_return(:middle_rotor_was_at_notch)
-      @left_rotor.should_receive(:try_advance).with(:middle_rotor_was_at_notch)
+    describe "left rotor" do
+      it "should be advanced if the middle rotor is at a notch" do
+        @middle_rotor.stub!(:at_notch?).and_return(true)
+        @left_rotor.should_receive(:advance_position)
 
-      @e.send(:advance_rotors)
+        @e.send(:advance_rotors)
+      end
+
+      it "should not be advanced if it is at a notch" do
+        @left_rotor.stub!(:at_notch?).and_return(true)
+        @left_rotor.should_not_receive(:advance_position)
+
+        @e.send(:advance_rotors)
+      end
+
+      it "should not be advanced otherwise" do
+        @left_rotor.should_not_receive(:advance_position)
+
+        @e.send(:advance_rotors)
+      end
+    end
+
+    describe "4th rotor (when present)" do
+      before :each do
+        @fourth_rotor = mock("Rotor", :at_notch? => false, :advance_position => nil)
+        @e.instance_variable_get('@rotors').unshift(@fourth_rotor)
+      end
+
+      it "should never be advanced" do
+        @fourth_rotor.stub!(:at_notch?).and_return(true)
+        @left_rotor.stub!(:at_notch?).and_return(true)
+        @fourth_rotor.should_not_receive(:advance_position)
+
+        @e.send(:advance_rotors)
+      end
     end
   end
 end

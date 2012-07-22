@@ -37,9 +37,9 @@ class EnigmaMachine
   private
 
   def advance_rotors
-    at_notch = @rotors[-1].try_advance(true)
-    at_notch = @rotors[-2].try_advance(at_notch)
-    at_notch = @rotors[-3].try_advance(at_notch)
+    @rotors[-3].advance_position if @rotors[-2].at_notch?
+    @rotors[-2].advance_position if @rotors[-2].at_notch? or @rotors[-1].at_notch?
+    @rotors[-1].advance_position
   end
 end
 
