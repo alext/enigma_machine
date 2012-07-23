@@ -7,7 +7,8 @@ class EnigmaMachine
     #   Plugboard.new(%w(AB CD EF GH), @rotor)
     #
     # @param mapping_pairs [Array<String>] A list of letter pairs to be connected
-    # @param rotor [Rotor] the rightmost rotor that will be called next in the processing chain
+    # @param rotor [#translate] the rightmost rotor that will be called next in the processing chain
+    # @raise [ConfigurationError] if an invalid mapping passed in (not pairs of leters, or a letter connected more than once)
     def initialize(mapping_pairs, rotor)
       build_mapping(mapping_pairs)
       @decorated = rotor

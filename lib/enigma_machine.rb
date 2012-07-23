@@ -55,7 +55,7 @@ class EnigmaMachine
   #
   # Pass in Positions for the rotors from left to right
   #
-  # @param positions [*String] the positions to set the rotors to
+  # @param positions [List<String>] the positions to set the rotors to
   # @return [void]
   def set_rotors(*positions)
     positions.each_with_index do |position, i|
