@@ -10,12 +10,15 @@ class EnigmaMachine
 
     # Construct a new reflector
     #
-    # Example:
+    # Examples:
     #
+    #   Reflector.new(:B)
     #   Reflector.new(%w(AY BR CU DH EQ FS GL IP JX KN MO TZ VW))
     #
-    # @param mapping [Array<String>] A list of 13 letter pairs to be swapped by the reflector
-    # @raise [ConfigurationError] if an invalid mapping is passed in (not 13 pairs of letters, or a letter appearing more than once)
+    # @param mapping [Symbol,Array<String>] A symbol representing one of the standard reflectors or
+    #   an array of 13 letter pairs to be swapped by the reflector
+    # @raise [ConfigurationError] if an invalid mapping is passed in (unrecognised standard reflector,
+    #   not 13 pairs of letters, or a letter appearing more than once)
     def initialize(mapping)
       if mapping.is_a?(Symbol)
         raise ConfigurationError unless STANDARD_MAPPINGS.has_key?(mapping)
