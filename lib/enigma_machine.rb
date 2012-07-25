@@ -1,5 +1,5 @@
 class EnigmaMachine
-  ConfigurationError = Class.new(StandardError)
+  class ConfigurationError < StandardError; end
 
   ALPHABET = ('A'..'Z').to_a
 
