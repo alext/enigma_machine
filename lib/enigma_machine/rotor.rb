@@ -88,7 +88,7 @@ class EnigmaMachine
     # This performs a forward substitution, calls the next component to do the rest of the translation, and then
     # reverse substitutes the result on the way back out.
     #
-    # @param letter [String] the letter to be translated
+    # @param input [String] the letter to be translated
     # @return [String] the translated letter
     def translate(input)
       step = forward(input)

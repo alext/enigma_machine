@@ -29,10 +29,10 @@ class EnigmaMachine
     end
 
     # @!method translate(letter)
-    #   simply perform a substitution
+    # simply perform a substitution
     #
-    #   @param letter [String] the letter to be substituted
-    #   @return [String] the substituted letter
+    # @param letter [String] the letter to be substituted
+    # @return [String] the substituted letter
     alias :translate :substitute
   end
 end
