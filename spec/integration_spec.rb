@@ -1,7 +1,6 @@
 # encoding: UTF-8
-require 'spec_helper'
 
-describe "Integration tests" do
+RSpec.describe "Integration tests" do
 
   describe "basic sample tests" do
     # taken from http://wiki.franklinheath.co.uk/index.php/Enigma/Paper_Enigma
@@ -13,7 +12,7 @@ describe "Integration tests" do
       )
       e.set_rotors('A', 'B', 'C')
 
-      e.translate('AEFAE JXXBN XYJTY').should == 'CONGR ATULA TIONS'
+      expect(e.translate('AEFAE JXXBN XYJTY')).to eq('CONGR ATULA TIONS')
     end
 
     it "should translate a message with rotor turnover" do
@@ -23,7 +22,7 @@ describe "Integration tests" do
       )
       e.set_rotors('A', 'B', 'R')
 
-      e.translate('MABEK GZXSG').should == 'TURNM IDDLE'
+      expect(e.translate('MABEK GZXSG')).to eq('TURNM IDDLE')
     end
 
     it "should translate a message with double stepping" do
@@ -33,7 +32,7 @@ describe "Integration tests" do
       )
       e.set_rotors('A', 'D', 'S')
 
-      e.translate('RZFOG FYHPL').should == 'TURNS THREE'
+      expect(e.translate('RZFOG FYHPL')).to eq('TURNS THREE')
     end
 
     it "should translate a message with ring settings" do
@@ -43,7 +42,7 @@ describe "Integration tests" do
       )
       e.set_rotors('X', 'Y', 'Z')
 
-      e.translate('QKTPE BZIUK').should == 'GOODR ESULT'
+      expect(e.translate('QKTPE BZIUK')).to eq('GOODR ESULT')
     end
 
     it "should translate a message with a plugboard as well" do
@@ -54,7 +53,7 @@ describe "Integration tests" do
       )
       e.set_rotors('V', 'Q', 'Q')
 
-      e.translate('HABHV HLYDF NADZY').should == 'THATS ITWEL LDONE'
+      expect(e.translate('HABHV HLYDF NADZY')).to eq('THATS ITWEL LDONE')
     end
   end
 
@@ -71,7 +70,7 @@ describe "Integration tests" do
         e.set_rotors('A', 'B', 'L')
         result = e.translate('GCDSE AHUGW TQGRK VLFGX UCALX VYMIG MMNMF DXTGN VHVRM MEVOU YFZSL RHDRR XFJWC FHUHM UNZEF RDISI KBGPM YVXUZ')
 
-        result.should == 'FEIND LIQEI NFANT ERIEK OLONN EBEOB AQTET XANFA NGSUE DAUSG ANGBA ERWAL DEXEN DEDRE IKMOS TWAER TSNEU STADT'
+        expect(result).to eq('FEIND LIQEI NFANT ERIEK OLONN EBEOB AQTET XANFA NGSUE DAUSG ANGBA ERWAL DEXEN DEDRE IKMOS TWAER TSNEU STADT')
         # German: Feindliche Infanterie Kolonne beobachtet. Anfang Südausgang Bärwalde. Ende 3km ostwärts Neustadt.
         # English: Enemy infantry column was observed. Beginning [at] southern exit [of] Baerwalde. Ending 3km east of Neustadt.
       end
@@ -85,11 +84,11 @@ describe "Integration tests" do
 
         e.set_rotors('B', 'L', 'A')
         result = e.translate('EDPUD NRGYS ZRCXN UYTPO MRMBO FKTBZ REZKM LXLVE FGUEY SIOZV EQMIK UBPMM YLKLT TDEIS MDICA GYKUA CTCDO MOHWX MUUIA UBSTS LRNBZ SZWNR FXWFY SSXJZ VIJHI DISHP RKLKA YUPAD TXQSP INQMA TLPIF SVKDA SCTAC DPBOP VHJK-')
-        result.should == 'AUFKL XABTE ILUNG XVONX KURTI NOWAX KURTI NOWAX NORDW ESTLX SEBEZ XSEBE ZXUAF FLIEG ERSTR ASZER IQTUN GXDUB ROWKI XDUBR OWKIX OPOTS CHKAX OPOTS CHKAX UMXEI NSAQT DREIN ULLXU HRANG ETRET ENXAN GRIFF XINFX RGTX-'
+        expect(result).to eq('AUFKL XABTE ILUNG XVONX KURTI NOWAX KURTI NOWAX NORDW ESTLX SEBEZ XSEBE ZXUAF FLIEG ERSTR ASZER IQTUN GXDUB ROWKI XDUBR OWKIX OPOTS CHKAX OPOTS CHKAX UMXEI NSAQT DREIN ULLXU HRANG ETRET ENXAN GRIFF XINFX RGTX-')
 
         e.set_rotors('L', 'S', 'D')
         result = e.translate('SFBWD NJUSE GQOBH KRTAR EEZMW KPPRB XOHDR OEQGB BGTQV PGVKB VVGBI MHUSZ YDAJQ IROAX SSSNR EHYGG RPISE ZBOVM QIEMM ZCYSG QDGRE RVBIL EKXYQ IRGIR QNRDN VRXCY YTNJR')
-        result.should == 'DREIG EHTLA NGSAM ABERS IQERV ORWAE RTSXE INSSI EBENN ULLSE QSXUH RXROE MXEIN SXINF RGTXD REIXA UFFLI EGERS TRASZ EMITA NFANG XEINS SEQSX KMXKM XOSTW XKAME NECXK'
+        expect(result).to eq('DREIG EHTLA NGSAM ABERS IQERV ORWAE RTSXE INSSI EBENN ULLSE QSXUH RXROE MXEIN SXINF RGTXD REIXA UFFLI EGERS TRASZ EMITA NFANG XEINS SEQSX KMXKM XOSTW XKAME NECXK')
 
         # German: Aufklärung abteilung von Kurtinowa nordwestlich Sebez [auf] Fliegerstraße in Richtung Dubrowki, Opotschka. Um 18:30 Uhr angetreten angriff. Infanterie Regiment 3 geht langsam aber sicher vorwärts. 17:06 Uhr röm eins InfanterieRegiment 3 auf Fliegerstraße mit Anfang 16km ostwärts Kamenec.
         # English: Reconnaissance division from Kurtinowa north-west of Sebezh on the flight corridor towards Dubrowki, Opochka. Attack begun at 18:30 hours. Infantry Regiment 3 goes slowly but surely forwards. 17:06 hours [Roman numeral I?] Infantry Regiment 3 on the flight corridor starting 16 km east of Kamenec.
@@ -104,7 +103,7 @@ describe "Integration tests" do
 
         e.set_rotors('U', 'Z', 'V')
         result = e.translate('YKAE NZAP MSCH ZBFO CUVM RMDP YCOF HADZ IZME FXTH FLOL PZLF GGBO TGOX GRET DWTJ IQHL MXVJ WKZU ASTR')
-        result.should == 'STEU EREJ TANA FJOR DJAN STAN DORT QUAA ACCC VIER NEUN NEUN ZWOF AHRT ZWON ULSM XXSC HARN HORS THCO'
+        expect(result).to eq('STEU EREJ TANA FJOR DJAN STAN DORT QUAA ACCC VIER NEUN NEUN ZWOF AHRT ZWON ULSM XXSC HARN HORS THCO')
 
         # German: Steuere Tanafjord an. Standort Quadrat AC4992, fahrt 20sm. Scharnhorst. [hco - padding?]
         # English: Heading for Tanafjord. Position is square AC4992, speed 20 knots. Scharnhorst.
@@ -121,7 +120,7 @@ describe "Integration tests" do
 
         e.set_rotors('V', 'J', 'N', 'A')
         result = e.translate('NCZW VUSX PNYM INHZ XMQX SFWX WLKJ AHSH NMCO CCAK UQPM KCSM HKSE INJU SBLK IOSX CKUB HMLL XCSJ USRR DVKO HULX WCCB GVLI YXEO AHXR HKKF VDRE WEZL XOBA FGYU JQUK GRTV UKAM EURB VEKS UHHV OYHA BCJW MAKL FKLM YFVN RIZR VVRT KOFD ANJM OLBG FFLE OPRG TFLV RHOW OPBE KVWM UQFM PWPA RMFH AGKX IIBG')
-        result.should == 'VONV ONJL OOKS JHFF TTTE INSE INSD REIZ WOYY QNNS NEUN INHA LTXX BEIA NGRI FFUN TERW ASSE RGED RUEC KTYW ABOS XLET ZTER GEGN ERST ANDN ULAC HTDR EINU LUHR MARQ UANT ONJO TANE UNAC HTSE YHSD REIY ZWOZ WONU LGRA DYAC HTSM YSTO SSEN ACHX EKNS VIER MBFA ELLT YNNN NNNO OOVI ERYS ICHT EINS NULL'
+        expect(result).to eq('VONV ONJL OOKS JHFF TTTE INSE INSD REIZ WOYY QNNS NEUN INHA LTXX BEIA NGRI FFUN TERW ASSE RGED RUEC KTYW ABOS XLET ZTER GEGN ERST ANDN ULAC HTDR EINU LUHR MARQ UANT ONJO TANE UNAC HTSE YHSD REIY ZWOZ WONU LGRA DYAC HTSM YSTO SSEN ACHX EKNS VIER MBFA ELLT YNNN NNNO OOVI ERYS ICHT EINS NULL')
 
         # German: Von Von 'Looks' F T 1132/19 Inhalt: Bei Angriff unter Wasser gedrückt, Wasserbomben. Letzter Gegnerstandort 08:30 Uhr Marine Quadrat AJ9863, 220 Grad, 8sm, stosse nach. 14mb fällt, NNO 4, Sicht 10.
         # English: From Looks, radio-telegram 1132/19 contents: Forced to submerge under attack, depth charges. Last enemy location 08:30 hours, sea square AJ9863, following 220 degrees, 8 knots. [Pressure] 14 millibars falling, [wind] north-north-east 4, visibility 10.

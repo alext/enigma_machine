@@ -5,3 +5,4 @@ pkg/*
 .rvmrc
 doc/*
 .yardoc
+spec/examples.txt

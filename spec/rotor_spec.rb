@@ -1,95 +1,94 @@
-require 'spec_helper'
 
-describe EnigmaMachine::Rotor do
+RSpec.describe EnigmaMachine::Rotor do
 
   describe "configuring a rotor" do
     describe "using one of the standard configurations" do
       it "should raise an error if using an unknown name" do
-        lambda do
+        expect do
           EnigmaMachine::Rotor.new(:foo, 1, :next)
-        end.should raise_error(EnigmaMachine::ConfigurationError)
+        end.to raise_error(EnigmaMachine::ConfigurationError)
       end
 
       it "should support rotor i" do
         r = EnigmaMachine::Rotor.new(:i, 1, :next)
-        r.forward('A').should == 'E'
-        r.forward('Q').should == 'X'
+        expect(r.forward('A')).to eq('E')
+        expect(r.forward('Q')).to eq('X')
         r.position = 'Q'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor ii" do
         r = EnigmaMachine::Rotor.new(:ii, 1, :next)
-        r.forward('A').should == 'A'
-        r.forward('M').should == 'W'
+        expect(r.forward('A')).to eq('A')
+        expect(r.forward('M')).to eq('W')
         r.position = 'E'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor iii" do
         r = EnigmaMachine::Rotor.new(:iii, 1, :next)
-        r.forward('A').should == 'B'
-        r.forward('Q').should == 'I'
+        expect(r.forward('A')).to eq('B')
+        expect(r.forward('Q')).to eq('I')
         r.position = 'V'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor iv" do
         r = EnigmaMachine::Rotor.new(:iv, 1, :next)
-        r.forward('A').should == 'E'
-        r.forward('Q').should == 'N'
+        expect(r.forward('A')).to eq('E')
+        expect(r.forward('Q')).to eq('N')
         r.position = 'J'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor v" do
         r = EnigmaMachine::Rotor.new(:v, 1, :next)
-        r.forward('A').should == 'V'
-        r.forward('Q').should == 'A'
+        expect(r.forward('A')).to eq('V')
+        expect(r.forward('Q')).to eq('A')
         r.position = 'Z'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor vi" do
         r = EnigmaMachine::Rotor.new(:vi, 1, :next)
-        r.forward('A').should == 'J'
-        r.forward('Q').should == 'D'
+        expect(r.forward('A')).to eq('J')
+        expect(r.forward('Q')).to eq('D')
         r.position = 'M'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
         r.position = 'Z'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor vii" do
         r = EnigmaMachine::Rotor.new(:vii, 1, :next)
-        r.forward('A').should == 'N'
-        r.forward('Q').should == 'A'
+        expect(r.forward('A')).to eq('N')
+        expect(r.forward('Q')).to eq('A')
         r.position = 'M'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
         r.position = 'Z'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor viii" do
         r = EnigmaMachine::Rotor.new(:viii, 1, :next)
-        r.forward('A').should == 'F'
-        r.forward('Q').should == 'A'
+        expect(r.forward('A')).to eq('F')
+        expect(r.forward('Q')).to eq('A')
         r.position = 'M'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
         r.position = 'Z'
-        r.at_notch?.should == true
+        expect(r.at_notch?).to eq(true)
       end
 
       it "should support rotor beta" do
         r = EnigmaMachine::Rotor.new(:beta, 1, :next)
-        r.forward('A').should == 'L'
-        r.forward('Q').should == 'T'
+        expect(r.forward('A')).to eq('L')
+        expect(r.forward('Q')).to eq('T')
       end
 
       it "should support rotor gamma" do
         r = EnigmaMachine::Rotor.new(:gamma, 1, :next)
-        r.forward('A').should == 'F'
-        r.forward('Q').should == 'W'
+        expect(r.forward('A')).to eq('F')
+        expect(r.forward('Q')).to eq('W')
       end
     end
   end
@@ -100,24 +99,24 @@ describe EnigmaMachine::Rotor do
     end
 
     it "should set the position to 'A' by default" do
-      @rotor.position.should == 'A'
+      expect(@rotor.position).to eq('A')
     end
 
     it "should allow setting the position" do
       @rotor.position = 'G'
-      @rotor.position.should == 'G'
+      expect(@rotor.position).to eq('G')
     end
 
     describe "advancing the position" do
       it "should allow advancing the position" do
         @rotor.advance_position
-        @rotor.position.should == 'B'
+        expect(@rotor.position).to eq('B')
       end
 
       it "should wrap around when advancing beyond 'Z'" do
         @rotor.position = 'Z'
         @rotor.advance_position
-        @rotor.position.should == 'A'
+        expect(@rotor.position).to eq('A')
       end
     end
   end
@@ -127,45 +126,45 @@ describe EnigmaMachine::Rotor do
       rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 1, :foo)
 
       rotor.position = 'D'
-      rotor.at_notch?.should == true
+      expect(rotor.at_notch?).to eq(true)
 
       rotor.position = 'R'
-      rotor.at_notch?.should == true
+      expect(rotor.at_notch?).to eq(true)
     end
 
     it "should return false otherwise" do
       rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 1, :foo)
 
       rotor.position = 'C'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
       rotor.position = 'E'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
 
       rotor.position = 'Q'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
       rotor.position = 'S'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
 
       rotor.position = 'A'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
     end
 
     it "should be unaffected by the ring position" do
       rotor = EnigmaMachine::Rotor.new('EKMFLGDQVZNTOWYHXUSPAIBRCJ_DR', 6, :foo)
 
       rotor.position = 'C'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
       rotor.position = 'D'
-      rotor.at_notch?.should == true
+      expect(rotor.at_notch?).to eq(true)
       rotor.position = 'E'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
 
       rotor.position = 'Q'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
       rotor.position = 'R'
-      rotor.at_notch?.should == true
+      expect(rotor.at_notch?).to eq(true)
       rotor.position = 'S'
-      rotor.at_notch?.should == false
+      expect(rotor.at_notch?).to eq(false)
     end
   end
 
@@ -176,13 +175,13 @@ describe EnigmaMachine::Rotor do
       end
 
       it "should translate letters correctly in the forward direction" do
-        @rotor.forward("B").should == "K"
-        @rotor.forward("Y").should == "C"
+        expect(@rotor.forward("B")).to eq("K")
+        expect(@rotor.forward("Y")).to eq("C")
       end
 
       it "should translate letters correctly in the reverse direction" do
-        @rotor.reverse("L").should == "E"
-        @rotor.reverse("C").should == "Y"
+        expect(@rotor.reverse("L")).to eq("E")
+        expect(@rotor.reverse("C")).to eq("Y")
       end
     end
 
@@ -192,13 +191,13 @@ describe EnigmaMachine::Rotor do
       end
 
       it "should translate letters correctly in the forward direction" do
-        @rotor.forward("B").should == "V"
-        @rotor.forward("U").should == "B"
+        expect(@rotor.forward("B")).to eq("V")
+        expect(@rotor.forward("U")).to eq("B")
       end
 
       it "should translate letters correctly in the reverse direction" do
-        @rotor.reverse("F").should == "A"
-        @rotor.reverse("C").should == "S"
+        expect(@rotor.reverse("F")).to eq("A")
+        expect(@rotor.reverse("C")).to eq("S")
       end
     end
 
@@ -209,13 +208,13 @@ describe EnigmaMachine::Rotor do
       end
 
       it "should translate letters correctly in the forward direction" do
-        @rotor.forward("B").should == "D"
-        @rotor.forward("Y").should == "O"
+        expect(@rotor.forward("B")).to eq("D")
+        expect(@rotor.forward("Y")).to eq("O")
       end
 
       it "should translate letters correctly in the reverse direction" do
-        @rotor.reverse("L").should == "C"
-        @rotor.reverse("V").should == "U"
+        expect(@rotor.reverse("L")).to eq("C")
+        expect(@rotor.reverse("V")).to eq("U")
       end
     end
 
@@ -226,13 +225,13 @@ describe EnigmaMachine::Rotor do
       end
 
       it "should translate letters correctly in the forward direction" do
-        @rotor.forward("B").should == "I"
-        @rotor.forward("Y").should == "H"
+        expect(@rotor.forward("B")).to eq("I")
+        expect(@rotor.forward("Y")).to eq("H")
       end
 
       it "should translate letters correctly in the reverse direction" do
-        @rotor.reverse("L").should == "F"
-        @rotor.reverse("V").should == "M"
+        expect(@rotor.reverse("L")).to eq("F")
+        expect(@rotor.reverse("V")).to eq("M")
       end
 
     end
@@ -240,11 +239,11 @@ describe EnigmaMachine::Rotor do
 
   describe "decorating a reflector" do
     it "should substitute the letter, pass to the rotor, then substitute the final result" do
-      reflector = stub("Reflector")
-      reflector.should_receive(:translate).with('D').and_return('H')
+      reflector = double("Reflector")
+      expect(reflector).to receive(:translate).with('D').and_return('H')
 
       rotor = EnigmaMachine::Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ_R", 1, reflector)
-      rotor.translate('G').should == 'P'
+      expect(rotor.translate('G')).to eq('P')
     end
   end
 end
